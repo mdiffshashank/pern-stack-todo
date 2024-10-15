@@ -1,21 +1,20 @@
 import React, { useState } from "react";
 
-const InputTodos = () => {
+const InputTodos = ({ setRefetch }) => {
   const [description, setDescription] = useState("");
 
   const onSubmit = async (event) => {
     try {
       event.preventDefault();
-
       const res = await fetch("http://localhost:4000/todos", {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({ description }),
       });
       if (res.ok) {
-        window.location = "/"; //re render
-
+        // window.location = "/"; //never do this
         console.log("ToDo Added successfully!");
+        setRefetch((refetch) => !refetch);
       }
     } catch (error) {
       console.error(error.message);

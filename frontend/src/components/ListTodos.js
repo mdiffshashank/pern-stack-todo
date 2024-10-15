@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import EditTodos from "./EditTodos";
 
-const ListTodos = () => {
+const ListTodos = ({ refetch, setRefetch }) => {
   const [todos, setTodos] = useState([]);
 
   const getTodos = async () => {
@@ -16,7 +16,7 @@ const ListTodos = () => {
 
   useEffect(() => {
     getTodos();
-  }, []);
+  }, [refetch]);
 
   const onDelete = async (todoId) => {
     try {
@@ -25,7 +25,8 @@ const ListTodos = () => {
       });
       if (res.ok) {
         console.log("ToDo deleted successfully!");
-        setTodos((todos) => todos.filter((todo) => todo.todo_id !== todoId));
+        setRefetch((refetch) => !refetch);
+        //setTodos((todos) => todos.filter((todo) => todo.todo_id !== todoId));
       }
     } catch (error) {
       console.error(error.message);
@@ -34,7 +35,7 @@ const ListTodos = () => {
 
   return (
     <>
-      <table class="table mt-5 text-center">
+      <table className="table mt-5 text-center">
         <thead>
           <tr>
             <th>Description </th>
@@ -48,7 +49,7 @@ const ListTodos = () => {
               <tr key={todo.todo_id}>
                 <td>{todo.description}</td>
                 <td>
-                  <EditTodos todo={todo} />
+                  <EditTodos todo={todo} setRefetch={setRefetch} />
                 </td>
                 <td>
                   <button
