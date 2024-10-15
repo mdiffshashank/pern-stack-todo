@@ -6,12 +6,15 @@ const InputTodos = () => {
   const onSubmit = async (event) => {
     try {
       event.preventDefault();
+
       const res = await fetch("http://localhost:4000/todos", {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({ description }),
       });
       if (res.ok) {
+        window.location = "/"; //re render
+
         console.log("ToDo Added successfully!");
       }
     } catch (error) {
