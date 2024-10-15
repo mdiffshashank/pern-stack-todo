@@ -18,6 +18,7 @@ const InputTodos = () => {
       console.error(error.message);
     }
   };
+
   return (
     <>
       <h1 className="text-center mt-5">PERN Todo List</h1>
